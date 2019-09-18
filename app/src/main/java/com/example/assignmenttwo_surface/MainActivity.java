@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
 
 
         try {
-            Thread.sleep(50);
+            Thread.sleep(5);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -84,12 +84,18 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
             case MotionEvent.ACTION_DOWN:
                 x = motionEvent.getX();
                 y = motionEvent.getY();
+                Log.d("position", "onTouch: x distance" + Math.abs(x - drawingpic_x)
+                + " y distance: "+ Math.abs(y - drawingpic_y
+                ));
+
                 touching = true;
-                if ((x > drawingpic_x) && (x < drawingpic_x + 100)
-                        && (y > drawingpic_y) && (y < drawingpic_y + 100)) {
+                if (100 >= (Math.abs(x - drawingpic_x)) && 100>= Math.abs(y - drawingpic_y ) ) {
                     drawingPicOffset_x = (int) x - drawingpic_x;
                     drawingPicOffset_y = (int) y - drawingpic_y;
                     drawingTouch = true;
+                    Toast.makeText(this,"touch",Toast.LENGTH_SHORT).show();
+
+
                 }
 
                 break;
