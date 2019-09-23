@@ -12,16 +12,14 @@
         android:orientation="vertical">
 
 
-        <SeekBar
-            android:id="@+id/seekBar"
+        <Button
+            android:id="@+id/button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:layout_editor_absoluteX="66dp"
-            tools:layout_editor_absoluteY="0dp" />
+            android:onClick="reset"
+            android:text="reset" />
 
-
-
-    <LinearLayout
+        <LinearLayout
         android:id="@+id/customViewLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

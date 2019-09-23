@@ -17,6 +17,7 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.assignmenttwo_surface.R;
@@ -25,7 +26,7 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
 
     Paint paint2;
     Path path;
-
+    Canvas c;
 
 
     OurView ov;
@@ -33,12 +34,12 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
     private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
     private float x, y;
-    private boolean touching, drawingTouch, drawingTouch2;
+    private boolean touching, drawingTouch;
     int drawingpic_x = 0, drawingpic_y = 0;
-    int drawingpic_x2 = 0, drawingpic_y2 = 0;
+
 
     int drawingPicOffset_x = 0, drawingPicOffset_y = 0;
-    int drawingPicOffset_x2 = 0, drawingPicOffset_y2 = 0;
+
 
 
 
@@ -46,19 +47,24 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setContentView(R.layout.activity_main);
+
+        LinearLayout layout = (LinearLayout) findViewById(R.id.customViewLayout);
+        ov = new OurView(getApplicationContext());
+        layout.addView(ov);
 
 
 
 
 
         //setContentView(R.layout.activity_main);
-        ov = new OurView(this);
+        //ov = new OurView(this);
         paint = new Paint();
 
         paint.setColor(Color.RED);
         ov.setOnTouchListener(this);
 
-        setContentView(ov);
+        //setContentView(ov);
 
 
     }
@@ -106,23 +112,17 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
                 touching = true;
                 if (100 >= (Math.abs(x - drawingpic_x)) && 100>= Math.abs(y - drawingpic_y ) ) {
                     drawingPicOffset_x = (int) x - drawingpic_x;
-                    drawingPicOffset_y = (int) y - drawingpic_y;
+
                     drawingTouch = true;
 
                     path.moveTo(x,y);
 
-                    Toast.makeText(this,"touch",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this,"touch ",Toast.LENGTH_SHORT).show();
 
 
                 }
 
-                if (50 >= (Math.abs(x - drawingpic_x2)) && 50>= Math.abs(y - drawingpic_y2 ) ) {
-                    drawingPicOffset_x2 = (int) x - drawingpic_x2;
-                    drawingPicOffset_y2 = (int) y - drawingpic_y2;
-                    drawingTouch2 = true;
 
-                    Toast.makeText(this,"touch 2",Toast.LENGTH_SHORT).show();
-                }
 
 
 
@@ -141,18 +141,14 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
                     path.lineTo(x,y);
                 }
 
-                if(drawingTouch2){
-                    drawingpic_x2 = (int) x-drawingPicOffset_x2;
-                    drawingpic_y2 = (int) y-drawingPicOffset_y2;
 
-                }
                 break;
 
 
 
             default:
                 drawingTouch = false;
-                drawingTouch2 = false;
+
                 touching = false;
 
             /*case  MotionEvent.ACTION_MOVE:
@@ -170,6 +166,15 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
 
 
         return true;
+    }
+
+    public void reset(View view) {
+        this.drawingpic_y = 0;
+        this.drawingpic_x =0;
+        path.reset();
+
+
+
     }
 
     public class OurView extends SurfaceView implements Runnable {
@@ -205,13 +210,11 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
                 if(!holder.getSurface().isValid()){
                    continue;
                 }
-                Canvas c = holder.lockCanvas();
+                c = holder.lockCanvas();
                 c.drawARGB(255,150,150,10);
                 c.drawPath(path,paint2);
-                //Rect rectangle = new Rect(0,0,100,100);
-                //c.drawBitmap(ball, null, rectangle, null);
+
                 c.drawCircle(drawingpic_x,drawingpic_y,100,paint);
-                c.drawCircle(drawingpic_x2,drawingpic_y2,50,paint);
 
                 //c.drawBitmap(ball,x,y,null);
                 holder.unlockCanvasAndPost(c);
