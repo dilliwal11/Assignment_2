@@ -45,6 +45,12 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+
+
+
+
         //setContentView(R.layout.activity_main);
         ov = new OurView(this);
         paint = new Paint();
